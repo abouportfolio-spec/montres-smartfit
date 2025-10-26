@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finaliser votre commande | SmartFit</title>
+
+  <!-- Style -->
+  <style>
+      /* ============= GLOBAL ============= */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f3f5f9;
+  margin: 0;
+  color: #333;
+}
+
+h2, h3 {
+  color: #1d1d1f;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ============= HEADER ============= */
+.header {
+  background: #fff;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.logo span {
+  color: #333;
+}
+
+.btn-retour {
+  background: #f1f3f6;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: 0.3s;
+}
+
+.btn-retour:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* ============= SECTION COMMANDE ============= */
+.commande-section {
+  padding: 60px 20px;
+}
+
+.commande-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ============= PRODUIT PREVIEW ============= */
+.produit-preview {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+  animation: slideInLeft 0.6s ease;
+}
+
+.card-produit {
+  text-align: center;
+}
+
+.card-produit img {
+  max-width: 200px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.card-produit .prix {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.card-produit ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* ============= FORMULAIRE ============= */
+.commande-form-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+  animation: slideInRight 0.6s ease;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.3s;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.form-group.half {
+  width: 48%;
+  display: inline-block;
+}
+
+.form-actions {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.btn-commander {
+  background: #007bff;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-commander:hover {
+  background: #0056b3;
+}
+
+/* Message */
+.form-message {
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.form-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.success { color: green; }
+.error { color: red; }
+
+/* ============= FOOTER ============= */
+.footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+  background: #fff;
+  margin-top: 50px;
+}
+
+/* ============= ANIMATIONS ============= */
+@keyframes slideInLeft {
+  from { transform: translateX(-40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 900px) {
+  .commande-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .form-group.half {
+    width: 100%;
+    display: block;
+  }
+  .produit-preview {
+    order: 2;
+  }
+}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header">
+    <div class="logo">🕐 <span>SmartFit</span></div>
+    <a href="index.html" class="btn-retour">← Retour à l'accueil</a>
+  </header>
+
+  <!-- ===================== SECTION COMMANDE ===================== -->
+  <main class="commande-section">
+    <div class="commande-wrapper">
+
+      <!-- ==== Détails du produit ==== -->
+      <aside class="produit-preview">
+        <h2>Votre sélection</h2>
+        <div class="card-produit">
+          <img id="produit-image" src="images/montre.jpg" alt="Montre SmartFit">
+          <h3 id="produit-nom">Modèle : -</h3>
+          <p class="prix" id="produit-prix">Prix : - €</p>
+          <ul id="produit-features">
+            <li>Suivi santé</li>
+            <li>Batterie longue durée</li>
+            <li>Notifications intelligentes</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- ==== Formulaire ==== -->
+      <section class="commande-form-box">
+        <h2>Finalisez votre commande</h2>
+
+        <form id="commande-form" action="https://formspree.io/f/xvgwelbg" method="POST">
+          <div class="form-group">
+            <label>Nom complet <span>*</span></label>
+            <input type="text" name="name" required placeholder="Ex : Amadou Koné">
+          </div>
+
+          <div class="form-group">
+            <label>Email <span>*</span></label>
+            <input type="email" name="email" required placeholder="Ex : amadou@gmail.com">
+          </div>
+
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" name="telephone" placeholder="Ex : +225 07 01 23 45 67">
+          </div>
+
+          <div class="form-group">
+            <label>Adresse de livraison</label>
+            <textarea name="adresse" rows="3" placeholder="Quartier, Ville, Pays"></textarea>
+          </div>
+
+          <div class="form-group half">
+            <label>Modèle</label>
+            <input type="text" name="modele" id="modele" readonly>
+          </div>
+
+          <div class="form-group half">
+            <label>Prix (€)</label>
+            <input type="text" name="prix" id="prix" readonly>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-commander">🛒 Confirmer la commande</button>
+          </div>
+
+          <div class="form-message"></div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <p>&copy; 2025 SmartFit. Tous droits réservés.</p>
+  </footer>
+
+  <!-- ===================== SCRIPT ===================== -->
+  <script src="commande.js"></script>
+
+</body>
+</html>
