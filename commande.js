@@ -70,7 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
   prixField.value = produit.prix;
   produitNom.textContent = `Modèle : ${modele}`;
   produitPrix.textContent = `Prix : ${produit.prix} €`;
+ if (produitImage) {
   produitImage.src = produit.image;
+}
   produitFeatures.innerHTML = produit.specs.map(f => `<li>${f}</li>`).join("");
 
   // ================================
@@ -112,21 +114,28 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { Accept: "application/json" }
       });
 
-      if (response.ok) {
-        showMessage(`✅ Merci ${name} ! Votre commande (${modele}) a bien été envoyée.`, "success");
+if (response.ok) {
+  // 1️⃣ Sauvegarder les infos de la commande dans localStorage
+  const infosCommande = {
+    nom: name,
+    email: email,
+    telephone: tel,
+    modele: modele,
+    prix: produit.prix
+  };
+  localStorage.setItem("derniereCommande", JSON.stringify(infosCommande));
 
-        setTimeout(() => {
-          form.reset();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 2000);
+  // 2️⃣ Afficher un message rapide de succès
+  showMessage(`✅ Merci ${name} ! Votre commande (${modele}) a bien été envoyée.`, "success");
 
-        setTimeout(() => {
-          window.location.href = "merci.html";
-        }, 3000);
+  // 3️⃣ Petite pause de 1 seconde pour afficher le message, puis redirection
+  setTimeout(() => {
+    window.location.href = "merci.html";
+  }, 1000);
 
-      } else {
-        showMessage("⚠️ Une erreur s’est produite. Veuillez réessayer.", "error");
-      }
+} else {
+  showMessage("⚠️ Une erreur s’est produite. Veuillez réessayer.", "error");
+}
     } catch (error) {
       console.error(error);
       showMessage("❌ Erreur de connexion au serveur.", "error");
