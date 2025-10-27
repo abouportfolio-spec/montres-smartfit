@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merci pour votre commande</title>
+  <style>
+    /* ============ STYLE GLOBAL ============ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #e2ebf7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    /* ============ CONTENEUR ============ */
+    .merci-container {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      animation: fadeIn 0.7s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============ TEXTE ============ */
+    h1 {
+      font-size: 1.8rem;
+      color: #2b8a3e;
+      margin-bottom: 15px;
+    }
+    p {
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+    .details {
+      background: #f6f8fc;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    /* ============ BOUTON ============ */
+    .btn-retour {
+      display: inline-block;
+      margin-top: 25px;
+      background: #2b8a3e;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .btn-retour:hover {
+      background: #237530;
+    }
+  </style>
+</head>
+<body>
+  <div class="merci-container">
+    <h1>🎉 Merci pour votre commande !</h1>
+    <p id="merci-nom"></p>
+    <div class="details">
+      <p id="merci-modele"></p>
+      <p id="merci-prix"></p>
+    </div>
+    <a href="index.html" class="btn-retour">Retour à l'accueil</a>
+  </div>
+
+  <script>
+    // 🧩 Récupérer les infos sauvegardées dans localStorage
+    const commande = JSON.parse(localStorage.getItem("derniereCommande"));
+
+    if (commande) {
+      document.getElementById("merci-nom").textContent = `Merci ${commande.nom} !`;
+      document.getElementById("merci-modele").textContent = `Modèle commandé : ${commande.modele}`;
+      document.getElementById("merci-prix").textContent = `Prix : ${commande.prix} €`;
+
+      // On efface les données après affichage
+      localStorage.removeItem("derniereCommande");
+    } else {
+      // Si l'utilisateur vient ici sans commande enregistrée
+      document.body.innerHTML = `
+        <div class="merci-container">
+          <h1>⚠️ Aucune commande trouvée</h1>
+          <p>Veuillez repasser par la page de commande.</p>
+          <a href="index.html" class="btn-retour">Retour à l'accueil</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
